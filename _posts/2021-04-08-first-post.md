@@ -3,9 +3,9 @@ title: "첫 포스팅"
 excerpt: "first posting"
 
 categories:
-    - Blog
-tags: 
-    - Blog
+    - recommendation-systems
+tags:
+    - recommendation-systems
 use_math: true
 ---
 $f(x)$

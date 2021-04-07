@@ -1,9 +1,9 @@
 # main links
 main:
-  - title: "Study" # "Quick-Start Guide"
-    url: https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/
-  # - title: "About"
-  #   url: https://mmistakes.github.io/minimal-mistakes/about/
+  - title: "categories" # "Quick-Start Guide"
+    url: /categories/
+  - title: "추천시스템"
+    url: /categories/recommendation-systems/
   # - title: "Sample Posts"
   #   url: /year-archive/
   # - title: "Sample Collections"
