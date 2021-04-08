@@ -1,11 +1,12 @@
 # main links
 main:
-  - title: "categories" # "Quick-Start Guide"
-    url: /categories/
+
   - title: "추천시스템"
     url: /categories/recommendation-systems/
-  # - title: "Sample Posts"
-  #   url: /year-archive/
+  - title: "머신러닝"
+     url: /categories/machine-learning/
+  - title: "categories" # "Quick-Start Guide"
+     url: /categories/
   # - title: "Sample Collections"
   #   url: /collection-archive/
   # - title: "Sitemap"
