@@ -96,13 +96,13 @@ analytics:
 author:
   name             : "인공지능 대학원 준비생"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "배우자"
+  bio              : "배우자!"
   location         : "South Korea"
   email            :
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
-      url: "anhanmu78@gmail.com"
+      # url: "anhanmu78@gmail.com"
     - label: "Website"
       icon: "fas fa-fw fa-link"
       # url: "https://your-website.com"
