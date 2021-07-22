@@ -5,7 +5,10 @@ main:
   - title: "추천시스템"
     url: /categories/recommendation-systems/
   - title: "머신러닝"
-    url: /categories/machine-learning/
+    url: /categories/machine-learning/  
+  - title: "알고리즘"
+    url: /categories/algorithms/
+ 
 
   # - title: "Sample Collections"
   #   url: /collection-archive/
