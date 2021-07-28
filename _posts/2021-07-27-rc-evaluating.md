@@ -105,41 +105,35 @@ $r_{uj}$ : $(u,j) \in E$ rating 값
 
 $\hat{r}_{uj}$ : 예측된 값
 
-$e_{uj} = \hat{r}_{uj} - r{uj}$ : 예측 오류값
+$e_{uj} = \hat{r_{uj}} - r_{uj}$ : 예측 오류값
 
-- MSE
+- MSE : MSE 값이 작을 수록 높은 성능의 시스템이다.
 
     $MSE = \frac{\sum_{(u,j) \in E}{e_{uj}}^2}{\|E\|}$
 
-MSE 값이 작을 수록 높은 성능의 시스템이다.
-
-- RMSE
+- RMSE : 이상치에 민감한 값이다.
 
     $RMSE = \sqrt{\frac{\sum_{(u,j) \in E}{e_{uj}}^2}{\|E\|}}$
 
-이상치에 민감한 값이다.
-
 - MAE
 
-MSE, RMSE와 달리 이상치에 그렇게 민감하진 않다.
-
-$MAE = \frac{\sum_{(u,j) \in E}|{e_{uj}}|}{\|E\|}$
+    $MAE = \frac{\sum_{(u,j) \in E} \|{e_{uj}}\|}{\|E\|}$
 
 - NRMSE : Normalized RMSE(정규화된 RMSE)
 
-$NRMSE=\frac{RMSE}{r_{max}-r_{min}}$
+    $NRMSE=\frac{RMSE}{r_{max}-r_{min}}$
 
 - NMAE : Normalized RMSE(정규화된 NAE)
 
-$NMAE=\frac{MAE}{r_{max}-r_{min}}$
+    $NMAE=\frac{MAE}{r_{max}-r_{min}}$
 
 NRMSE, NMAE 둘 다 범위가 (0,1)로 직관적인 비교에 유용하다.
 
-### 7.5.1.1 RMSE vs MAE
+#### 7.5.1.1 RMSE vs MAE
 
 RMSE는 outlier나 큰 에러 값에 MAE 보다 더 큰 영향을 받는다. 강력한 예측을 원한다면 RMSE가 적합한 평가 기준이 된다. RMSE의 단점은 평균 에러값을 반영하지 못한다.
 
-### 7.5.1.2 Impact of the Long Tail
+#### 7.5.1.2 Impact of the Long Tail
 
 <img src="/assets/images/12chapter7_1/4.png" width="80%" height="80%" />
 
@@ -157,13 +151,10 @@ $I_u$ : hold-out이나 cross-validation으로 나누어져서 평가 점수를 �
 
 1. ***Kendall rank correlation coefficient*** : $j,k \in I_i$ 두 아이템간의 순위를 비교해서 연관성을 찾는다.
 
-    ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c9091f25-7ecb-4d49-bb5b-6968f849a615/스크린샷_2021-07-27_오후_6.13.11.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c9091f25-7ecb-4d49-bb5b-6968f849a615/스크린샷_2021-07-27_오후_6.13.11.png)
+    $\tau_u = \frac{\sum_{j < k} C \left( j,k \right) }{\|I_u\| \cdot \left( I_u -1 \right)/2 }$
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/707341b1-b11c-4a70-87d8-cba518816ed4/스크린샷_2021-07-27_오후_6.14.01.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/707341b1-b11c-4a70-87d8-cba518816ed4/스크린샷_2021-07-27_오후_6.14.01.png)
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a06ea7ab-15d9-4b5c-abfa-ba81bf048139/스크린샷_2021-07-27_오후_6.14.14.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a06ea7ab-15d9-4b5c-abfa-ba81bf048139/스크린샷_2021-07-27_오후_6.14.14.png)
-
-concordant : 일치하는 쌍들, discordant : 일치하지 않은 쌍들
+    $\tau_u = \frac{일치하는 쌍들의 개수 - 일치하지 않은 쌍들의 개수}{집합 I_u에서 쌍의 수 }$    
+    concordant : 일치하는 쌍들, discordant : 일치하지 않은 쌍들
 
 ## 7.5.3 Evaluation Ranking via Utility
 
@@ -179,14 +170,15 @@ $2^{(v_j-1)/\alpha}$: ranking-based utility
 
 1. utility function
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8bd85f10-c22d-4341-a2dc-3393619f228e/스크린샷_2021-07-27_오후_6.26.40.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8bd85f10-c22d-4341-a2dc-3393619f228e/스크린샷_2021-07-27_오후_6.26.40.png)
+    $F \left( u,j \right) = \frac{ max \\{ r_{uj}-C_u,0 \\} }{2^{(v_j-1)/\alpha}}$
 
-1. R-score: utility function의 합계
+2. R-score: utility function의 합계
 - 추천리스트는 최대 $L$개까지 노출되기 때문에 랭킹 $L$ 이하 레벨은 사용자들에게  utility가 없다.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/67145d0f-a102-4637-bd8c-6542a55e3b6d/스크린샷_2021-07-27_오후_6.28.06.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/67145d0f-a102-4637-bd8c-6542a55e3b6d/스크린샷_2021-07-27_오후_6.28.06.png)
+    $R-score \left( u\right) = \sum_{j \in I_u, v_j \lt L} F \left(u,j \right) $
 
-1. DCG : Discounted Cumulative Gain
+3. DCG : Discounted Cumulative Gain
+    $DCG = \frac{1}{m}\sum_{u=1}^m \sum_{j \in I_u, v_j \lt L} \frac{g_uj}{log_2\left(v_j+1\right)}$
 - $log_2{(v_j+1)}$ : 아이템 $j$에 대한 discount factor($v_j$는 ranking 순서값)
 - $g_{uj} = 2^{rel_i}-1$ : 사용자 $u$에게 아이템$j$에 대한 utility
 - $ rel_{uj} $ : ground-truth relevance(추천 결과들의 관련성)
@@ -194,51 +186,65 @@ $2^{(v_j-1)/\alpha}$: ranking-based utility
 - 랭킹 순서에 따라 점점 비중을 줄여가면서(discounted) 관련도를 계산하는 방법이다.
 - 랭킹 순서에 대한 로그함수를 분모에 두고, utility를 분자로 두어 하위권으로 갈수록 $rel$ 대시 작은 값을 같게 된다.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/0578f88d-dd00-4522-ae24-8596d4471689/스크린샷_2021-07-27_오후_6.29.38.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/0578f88d-dd00-4522-ae24-8596d4471689/스크린샷_2021-07-27_오후_6.29.38.png)
-
 [추천시스템 Metric - nDCG](https://joyae.github.io/2020-09-02-nDCG/)
 
-1. ARHR : average reciprocal hit ratio
+4. ARHR : average reciprocal hit ratio
     - $1/v_j$ : rank-based discount rate
+    - $r_{uj}$ : item utility $\in \{0,1\}$이다. 사용자에게 유용한가(1), 유용하지 않은가(0)
+    - $r_{uj}/v_j$ : 위 둘을 조합한 지표이다.
     - DCG보다 빠르지만 R-score metric보단 빠르지 않다.
 
-    ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b28af8ab-8b53-431f-bd93-dd446dc631bf/스크린샷_2021-07-27_오후_6.58.11.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b28af8ab-8b53-431f-bd93-dd446dc631bf/스크린샷_2021-07-27_오후_6.58.11.png)
+    $ARHR\left(u\right) = \sum_{j \in I_u} \frac{r_{uj}}{v_j}$
 
-    ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/04e7caa5-a3d6-4535-acd2-cea665936e6f/스크린샷_2021-07-27_오후_6.58.18.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/04e7caa5-a3d6-4535-acd2-cea665936e6f/스크린샷_2021-07-27_오후_6.58.18.png)
+    추천리스트의 사이즈 $L$을 고려하면 다음과 같은 식이 된다.
+
+    $ARHR\left(u\right) = \sum_{j \in I_u, v_j \lt L} \frac{r_{uj}}{v_j}$
+
+    Hit rate에 대해 먼저 알아보자면, 이는 테스트 세트의 모든 사용자에 대한 최고의 추천에 관한 모든 hit값을 합산하여 사용자 수로 나누어준 값이다.
+
+    ARHR은 보통 $\|I_u\|$ 의 값이 정확히 1이 되고, $I_u$ 집합에 속하는 hidden 아이템 j에 대한 평가값 $r_{uj}$이 1일 때 사용된다. 즉, 최상위 목록으로 추천을 잘 해주었는가를 따지는 값이 된다.
+
+    [ARHR](https://jjeongil.tistory.com/1216)
+
+
 
 ## 7.5.4 Evaluating Ranking via ROC
 
-$\mathcal{S(t)}$ : 추천시스템이 추천한 항목의 집합
+$\mathcal{S(t)}$ : 추천시스템이 추천한 항목의 집합(TP+FP)    
+$\mathcal{G}$ : 사용자가 소비한 항목의 집합(TP+FN)
 
-$\mathcal{G}$ : 사용자가 소비한 항목의 집합
+<img src="/assets/images/12chapter7_1/8.png" width="60%" height="60%" />
+- TP : 추천시스템이 추천한 아이템을 사용자가 실제로 본 것
+- FP : 추천시스템이 추천했지만 사용자가 보지 않은 것
+- FN : 추천시스템이 추천하진 않았지만 사용자가 실제로 본 것
+- TP + FP : 추천시스템이 추천한 항목    
 
-1. Precision :
+1. Precision : 실제로 사용자가 소비한 항목과 추천시스템이 추천한 항목의 교집합 개수 / 실제로 사용자가 소비한 항목의 개수
+    추천시스템이 추천한 것(모델이 True 라고 분류) 중에 실제로 사용자가 추천된 것을 본 비율
 
-실제로 사용자가 소비한 항목과 추천시스템이 추천한 항목의 교집합 개수 / 실제로 사용자가 소비한 항목의 개수
+    $Precision \left(t\right)= 100 \cdot \frac{\|\mathcal{S(t)} \cap \mathcal{G}\|}{\|\mathcal{S(t)}\|}$
 
-추천시스템이 추천한 것(모델이 True 라고 분류) 중에 실제로 사용자가 추천된 것을 본 비율
+    $Precision \left(t\right)= \frac{TP}{TP+FP}$
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/55e5d8c2-9524-4b48-9e6b-4780a6eccb13/스크린샷_2021-07-27_오후_6.30.33.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/55e5d8c2-9524-4b48-9e6b-4780a6eccb13/스크린샷_2021-07-27_오후_6.30.33.png)
+2. Recall(hit rate, sensitivity) : 실제로 사용자가 소비한 항목과 추천시스템이 추천한 항목의 교집합 개수 / 추천시스템이 추천한 항목의 개수
+    사용자가 실제로 본 것(라벨이 True) 중에 실제로 사용자가 추천된 것을 본 비율
 
-1. Recall : (hit rate, sensitivity)
+    $Recall \left(t\right)= 100 \cdot \frac{\|\mathcal{S(t)} \cap \mathcal{G}\|}{\|\mathcal{G}\|}$
 
-실제로 사용자가 소비한 항목과 추천시스템이 추천한 항목의 교집합 개수 / 추천시스템이 추천한 항목의 개수
+    $Precision \left(t\right)= \frac{TP}{TP+FN}$
 
-사용자가 실제로 본 것(라벨이 True) 중에 실제로 사용자가 추천된 것을 본 비율
+3. F1 score : Precision, Recall의 조화 평균
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4eef1f22-1e98-4796-9c95-c951f7d6fbe0/스크린샷_2021-07-27_오후_6.30.41.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4eef1f22-1e98-4796-9c95-c951f7d6fbe0/스크린샷_2021-07-27_오후_6.30.41.png)
+    $F_1\left(t\right) = \frac{2 \cdot Precision\left(t\right) \cdot Recall\left(t\right)}{Precision\left(t\right) + Recall \left( t\right)}$
 
-1. F1 score : Precision, Recall의 조화 평균
+4. FPR : False-Positive rate
+    - $\mathcal{U}$ : the universe of all items
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f99f9bbb-c7b0-4286-9c2c-a2f2765018fd/스크린샷_2021-07-27_오후_6.30.52.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f99f9bbb-c7b0-4286-9c2c-a2f2765018fd/스크린샷_2021-07-27_오후_6.30.52.png)
+    $FPR\left( t\right) = 100 \cdot \frac{\|\mathcal{S(t)}-\mathcal{G}\|}{\|\mathcal{U}-\mathcal{G}\|}$
 
-1. FPR : False-Positive rate
+<img src="/assets/images/12chapter7_1/5.png" width="80%" height="80%" />
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/48359467-6a49-4a5d-8a6a-f40291ccc494/스크린샷_2021-07-27_오후_6.31.52.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/48359467-6a49-4a5d-8a6a-f40291ccc494/스크린샷_2021-07-27_오후_6.31.52.png)
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ba26be72-cecb-4c35-9b59-cbf1523702d2/스크린샷_2021-07-27_오후_6.31.04.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ba26be72-cecb-4c35-9b59-cbf1523702d2/스크린샷_2021-07-27_오후_6.31.04.png)
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/74e6bbbe-ac97-47e2-9143-7aad34b4100e/스크린샷_2021-07-27_오후_6.31.25.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/74e6bbbe-ac97-47e2-9143-7aad34b4100e/스크린샷_2021-07-27_오후_6.31.25.png)
+<img src="/assets/images/12chapter7_1/6.png" width="80%" height="80%" />
 
 ## 7.6 Limitations of Evaluation Measures
 
